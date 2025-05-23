@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Vintage Portrait",
+    "prompt": "close-up portrait photo of [subject], vintage film photography, warm tones, grainy, 1970s style, ((photorealistic))"
+  },
+  {
+    "name": "Sci-Fi Avatar",
+    "prompt": "digital painting of [subject] as a sci-fi character, neon lights, futuristic city background, concept art, trending on artstation"
+  },
+  {
+    "name": "Watercolor Painting",
+    "prompt": "beautiful watercolor painting of [subject], soft colors, artistic, paper texture"
+  },
+  {
+    "name": "Ink Sketch",
+    "prompt": "detailed ink sketch of [subject], black and white, hatching, artistic"
+  }
+]

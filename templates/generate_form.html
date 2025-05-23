@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AI Image App - Generate Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Image Application</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Upload Selfie</a>
+                <a href="{{ url_for('generate') }}" class="active">Generate Image</a>
+            </nav>
+        </header>
+
+        <main>
+            <h2>Generate Image from Text Prompt</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('generate') }}" id="generate-form">
+            {% if style_templates %}
+            <p>
+                <label for="style_template">Select a Style Template (optional):</label>
+                <select name="style_template_select" id="style_template_select">
+                    <option value="">None - Use custom prompt below</option>
+                    {% for template in style_templates %}
+                    <option value="{{ template.prompt }}">{{ template.name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            {% endif %}
+
+                {% if style_templates %}
+                <p>
+                    <label for="style_template_select">Select a Style Template (optional):</label>
+                    <select name="style_template_select" id="style_template_select">
+                        <option value="">None - Use custom prompt below</option>
+                        {% for template in style_templates %}
+                        <option value="{{ template.prompt }}" {% if prompt == template.prompt %}selected{% endif %}>
+                            {{ template.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </p>
+                {% endif %}
+
+                <p>
+                    <label for="prompt">Enter your prompt (or modify selected template):</label>
+                    <textarea name="prompt" id="prompt" rows="4" required>{{ prompt or '' }}</textarea>
+                </p>
+                
+                <input type="hidden" name="prompt_before_js_fill" id="prompt_before_js_fill" value="{{ prompt or '' }}">
+
+                {% if available_selfies %}
+                <p>
+                    <label for="selected_selfie_filename">Optionally, select a selfie to influence the '[subject]' in the prompt (experimental):</label>
+                    <select name="selected_selfie_filename" id="selected_selfie_filename">
+                        <option value="none">None</option>
+                        {% for selfie_filename in available_selfies %}
+                        <option value="{{ selfie_filename }}" {% if selfie_filename == selected_selfie_filename %}selected{% endif %}>
+                            {{ selfie_filename }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </p>
+                {% endif %}
+
+                <p><input type="submit" value="Generate Image"></p>
+            </form>
+            <div id="loading-indicator">Generating, please wait... This can take a minute.</div>
+        </main>
+        <footer>
+            <p class="text-center">&copy; 2024 AI Image App</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const templateSelect = document.getElementById('style_template_select');
+            const promptTextarea = document.getElementById('prompt');
+            const originalPromptField = document.getElementById('prompt_before_js_fill');
+            const generateForm = document.getElementById('generate-form');
+            const loadingIndicator = document.getElementById('loading-indicator');
+
+            // Store initial prompt value in the hidden field
+            if (originalPromptField && !originalPromptField.value && promptTextarea.value) {
+                 originalPromptField.value = promptTextarea.value;
+            }
+
+            if (templateSelect && promptTextarea) {
+                templateSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        promptTextarea.value = this.value;
+                    } else {
+                        promptTextarea.value = originalPromptField.value || ''; 
+                    }
+                });
+            }
+            
+            if (promptTextarea && originalPromptField) {
+                promptTextarea.addEventListener('input', function() {
+                    if (!templateSelect || !templateSelect.value) {
+                         originalPromptField.value = this.value;
+                    }
+                });
+            }
+
+            if (generateForm && loadingIndicator) {
+                generateForm.addEventListener('submit', function() {
+                    // Basic validation: check if prompt is empty
+                    if (!promptTextarea.value.trim()) {
+                        // Optionally, flash a message or use browser validation
+                        // For now, we rely on 'required' attribute, but this is a JS hook
+                        return; // Prevent hiding indicator if form isn't truly submitting
+                    }
+                    loadingIndicator.style.display = 'block';
+                });
+            }
+
+            // If the page reloads with flashed messages (e.g., validation error from server),
+            // ensure the loading indicator is hidden.
+            const flashes = document.querySelector('.flashes');
+            if (flashes && flashes.children.length > 0 && loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

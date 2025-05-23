@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>AI Image App - Generated Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Image Application</h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Upload Selfie</a>
+                <a href="{{ url_for('generate') }}">Generate Image</a>
+            </nav>
+        </header>
+
+        <main>
+            <h2>Your Generated Image</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+
+            <div class="image-display-container">
+                <img src="{{ url_for('serve_generated_image', filename=image_filename) }}" alt="Generated Image">
+                
+                <h3>Generation Details:</h3>
+                <p><strong>Prompt:</strong> {{ prompt_used|e }}</p>
+                {% if selected_selfie_filename and selected_selfie_filename != 'none' %}
+                <p><strong>Influenced by Selfie:</strong> {{ selected_selfie_filename|e }}</p>
+                {% endif %}
+                {% if style_template_name %}
+                <p><strong>Style Template:</strong> {{ style_template_name|e }}</p>
+                {% endif %}
+            </div>
+
+            <div class="text-center mt-20">
+                <a href="{{ url_for('generate', prompt=prompt_used, selected_selfie_filename=selected_selfie_filename or '') }}" class="button-like">Generate Another with Same Settings</a>
+                <a href="{{ url_for('generate') }}" class="button-like">Generate New Image</a>
+            </div>
+        </main>
+        <footer>
+            <p class="text-center">&copy; 2024 AI Image App</p>
+        </footer>
+    </div>
+</body>
+</html>

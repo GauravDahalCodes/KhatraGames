@@ -1,0 +1,188 @@
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 0.8em;
+}
+h1 {
+    text-align: center;
+    font-size: 2.2em;
+}
+h2 {
+    font-size: 1.6em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.3em;
+}
+
+/* Navigation Styles */
+nav {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Form Styles */
+form p {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+input[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Flashed Messages */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.flashes li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    font-size: 0.95em;
+}
+
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.flashes .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.flashes .message, .flashes .info { /* General messages or info */
+    background-color: #e2e3e5;
+    color: #383d41;
+    border-color: #d6d8db;
+}
+
+/* Image Display */
+.image-display-container, .generated-image-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.image-display-container img, .generated-image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.image-display-container p, .generated-image-container p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 5px;
+}
+.image-display-container p strong {
+    color: #444;
+}
+
+
+/* Loading Indicator */
+#loading-indicator {
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: #007bff;
+    background-color: #e6f2ff;
+    border: 1px solid #b8d6fb;
+    border-radius: 5px;
+}
+
+/* Utility classes */
+.text-center {
+    text-align: center;
+}
+.mt-20 {
+    margin-top: 20px;
+}
+.mb-20 {
+    margin-bottom: 20px;
+}
